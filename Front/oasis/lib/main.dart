@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:oasis/screens/home_screen.dart';
-import 'package:oasis/screens/registration_screen.dart';
+import 'package:oasis/screens/registration_email.dart';
+import 'package:oasis/screens/registration_name.dart';
+import 'package:oasis/screens/registration_password.dart';
 import 'package:oasis/screens/welcome_screen.dart';
 import 'package:oasis/screens/login_screen.dart';
 
@@ -16,8 +18,11 @@ class MyApp extends StatelessWidget {
       routes: {
         Welcomescreen.id : (context) => Welcomescreen(),
         Loginscreen.id : (context) => Loginscreen(),
-        RegistrationScreen.id : (context) => RegistrationScreen(),
+        RegistrationEmail.id : (context) => RegistrationEmail(),
+        RegistrationPassword.id : (context) => RegistrationPassword(),
+        RegistrationName.id : (context) => RegistrationName(),
         HomeScreen.id : (context) => HomeScreen(),
+
       },
     );
   }

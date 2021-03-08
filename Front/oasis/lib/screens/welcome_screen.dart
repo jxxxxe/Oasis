@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oasis/screens/login_screen.dart';
-import 'package:oasis/screens/registration_screen.dart';
+import 'package:oasis/screens/registration_email.dart';
 
 class Welcomescreen extends StatelessWidget {
   static String id = 'welcome_screen';
@@ -153,7 +153,6 @@ class Welcomescreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.0),
                   child: MaterialButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, RegistrationScreen.id);
                     },
                     minWidth: 200.0,
                     height: 42.0,
@@ -167,7 +166,9 @@ class Welcomescreen extends StatelessWidget {
               ),
               SizedBox(height: 20,),
               FlatButton(
-                onPressed: null,
+                onPressed: (){
+                  Navigator.pushNamed(context, RegistrationEmail.id);
+                },
                 child: Text(
                   'Sign Up',
                   style: TextStyle(

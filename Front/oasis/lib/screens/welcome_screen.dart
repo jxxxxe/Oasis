@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oasis/screens/home_screen.dart';
 import 'package:oasis/screens/login_screen.dart';
 import 'package:oasis/screens/registration_email.dart';
 
@@ -105,7 +106,7 @@ class Welcomescreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.0),
                   child: MaterialButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, Loginscreen.id);
+                      Navigator.pushNamed(context, HomeScreen.id);
                     },
                     minWidth: 200.0,
                     height: 42.0,

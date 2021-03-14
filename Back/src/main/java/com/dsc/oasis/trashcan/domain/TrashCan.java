@@ -1,6 +1,6 @@
-package com.dsc.oasis.domain;
+package com.dsc.oasis.trashcan.domain;
 
-import com.dsc.oasis.dto.TrashCanResponse;
+import com.dsc.oasis.trashcan.dto.TrashCanResponse;
 import lombok.*;
 import org.locationtech.jts.geom.Point;
 

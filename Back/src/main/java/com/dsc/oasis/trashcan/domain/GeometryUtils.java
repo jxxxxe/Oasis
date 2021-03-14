@@ -1,4 +1,4 @@
-package com.dsc.oasis.domain;
+package com.dsc.oasis.trashcan.domain;
 
         /**
          * Calculate destination with start point, distance, bearing

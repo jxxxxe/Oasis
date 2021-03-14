@@ -1,8 +1,8 @@
-package com.dsc.oasis.interfaces;
+package com.dsc.oasis.trashcan.interfaces;
 
-import com.dsc.oasis.application.TrashcanService;
-import com.dsc.oasis.domain.TrashCan;
-import com.dsc.oasis.dto.TrashCanResponse;
+import com.dsc.oasis.trashcan.application.TrashcanService;
+import com.dsc.oasis.trashcan.domain.TrashCan;
+import com.dsc.oasis.trashcan.dto.TrashCanResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

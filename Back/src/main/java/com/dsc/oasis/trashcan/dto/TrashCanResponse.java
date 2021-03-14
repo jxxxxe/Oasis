@@ -1,4 +1,4 @@
-package com.dsc.oasis.dto;
+package com.dsc.oasis.trashcan.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

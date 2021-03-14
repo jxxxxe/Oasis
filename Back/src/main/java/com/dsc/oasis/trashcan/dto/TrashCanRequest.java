@@ -1,6 +1,6 @@
-package com.dsc.oasis.dto;
+package com.dsc.oasis.trashcan.dto;
 
-import com.dsc.oasis.domain.Location;
+import com.dsc.oasis.trashcan.domain.Location;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

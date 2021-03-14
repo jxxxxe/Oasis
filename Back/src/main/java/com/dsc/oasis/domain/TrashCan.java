@@ -1,5 +1,6 @@
 package com.dsc.oasis.domain;
 
+import com.dsc.oasis.dto.TrashCanResponse;
 import lombok.*;
 import org.locationtech.jts.geom.Point;
 
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Table(name="tb1_tcan")
+@Table(name= "tb1_tcan")
 public class TrashCan {
 
     @Id
@@ -22,8 +23,12 @@ public class TrashCan {
 
     private String location;
 
-    private String trashType;
+    private String trash_type;
 
+    @Setter
     private Point point;
 
+    public TrashCanResponse toResponse(){
+        return TrashCanResponse.builder().id(id).point(point).build();
+    }
 }

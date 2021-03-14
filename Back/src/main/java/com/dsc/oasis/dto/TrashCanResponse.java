@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.locationtech.jts.geom.Point;
 
 @Data
 @NoArgsConstructor
@@ -13,7 +14,5 @@ public class TrashCanResponse {
 
     private Long id;
 
-    private Long latitude;
-
-    private Long longitude;
+    private Point point;
 }

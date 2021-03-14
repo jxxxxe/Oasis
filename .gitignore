@@ -28,9 +28,6 @@ Front/oasis/*.js.map
 ### Flutter ###
 # Flutter/Dart/Pub related
 **/doc/api/
-Front/oasis/.idea/libraries/Dart_Packages.xml
-Front/oasis/.idea/libraries/Flutter_Plugins.xml
-Front/oasis/pubspec.lock
 Front/oasis/.flutter-plugins
 Front/oasis/.flutter-plugins-dependencies
 Front/oasis/.fvm/
@@ -53,7 +50,6 @@ Front/oasis/lib/generated_plugin_registrant.dart
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
 **/android/gradle.properties
-Front/oasis/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
 
 # iOS/XCode related
 **/ios/**/*.mode1v3
@@ -82,7 +78,6 @@ Front/oasis/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistra
 **/ios/Flutter/flutter_assets/
 **/ios/Flutter/flutter_export_environment.sh
 **/ios/ServiceDefinitions.json
-Front/oasis/ios/Runner/GeneratedPluginRegistrant.*
 
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3
@@ -92,3 +87,6 @@ Front/oasis/ios/Runner/GeneratedPluginRegistrant.*
 !Front/oasis//packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 
 # End of https://www.toptal.com/developers/gitignore/api/flutter,dart
+
+# Backend
+Back/src/main/resources/application.yml

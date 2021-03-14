@@ -1,12 +1,10 @@
-package com.dsc.oasis.application;
+package com.dsc.oasis.trashcan.application;
 
-import com.dsc.oasis.domain.*;
-import com.dsc.oasis.dto.TrashCanResponse;
+import com.dsc.oasis.trashcan.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service

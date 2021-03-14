@@ -1,4 +1,4 @@
-package com.dsc.oasis.domain;
+package com.dsc.oasis.trashcan.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

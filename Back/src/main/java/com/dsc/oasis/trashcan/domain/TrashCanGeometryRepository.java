@@ -1,4 +1,4 @@
-package com.dsc.oasis.domain;
+package com.dsc.oasis.trashcan.domain;
 
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,9 @@
 package com.dsc.oasis.trashcan.domain;
 
 import com.dsc.oasis.trashcan.dto.TrashCanResponse;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 import org.locationtech.jts.geom.Point;
 
 import javax.persistence.*;
@@ -25,7 +27,12 @@ public class TrashCan {
 
     private String trash_type;
 
-    @Setter
+    private Double latitude;
+
+    private Double longitude;
+
+    @Transient
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Point point;
 
     public TrashCanResponse toResponse(){

@@ -35,6 +35,12 @@ public class TrashCan {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Point point;
 
+    @Transient
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Point point_reverse;
+
+    private int distance;
+
     public TrashCanResponse toResponse(){
         return TrashCanResponse.builder().id(id).point(point).build();
     }

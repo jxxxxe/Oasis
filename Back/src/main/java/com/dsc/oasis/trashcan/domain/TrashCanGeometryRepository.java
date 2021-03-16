@@ -26,11 +26,12 @@ public class TrashCanGeometryRepository {
 
         double x1=northEast.getLatitude();
         double y1= northEast.getLongitude();
-        double x2= northEast.getLatitude();
-        double y2= northEast.getLongitude();
+        double x2= southWest.getLatitude();
+        double y2= southWest.getLongitude();
 
         String pointFormat=String.format("'LINESTRING(%f %f, %f %f)')",x1,y1,x2,y2);
-        Query query=entityManager.createNativeQuery("SELECT t.address, t.location,t.trash_type \n"
+        Query query=entityManager.createNativeQuery("SELECT t.id ,t.address, t.location,t.trash_type," +
+                "t.latitude, t.longitude, t.point \n"
                 +"FROM tb1_tcan AS t \n"
                 + "WHERE MBRContains(ST_LINESTRINGFROMTEXT(" + pointFormat + ", t.point)", TrashCan.class)
                 .setMaxResults(10);

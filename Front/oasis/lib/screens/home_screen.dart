@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:oasis/services/location.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'home_screen';
@@ -10,16 +11,62 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Marker> DestinationMarkers = [
-    Marker(
-      markerId: MarkerId('TrashCan1'),
-      draggable: false,
-      position: LatLng(
-        37.56321644,
-        127.0359075,
+  double latitude;
+  double longitude;
+  GoogleMapController _controller;
+  Widget _child;
+
+  void getUserLocation() async {
+    Location location = Location();
+    var position = await location.getCurrentLocation();
+    setState(() {
+      latitude = position.latitude;
+      longitude = position.longitude;
+      DestinationMarkers.add(
+        Marker(
+          markerId: MarkerId('TrashCan1'),
+          draggable: false,
+          position: LatLng(
+            latitude,
+            longitude,
+          ),
+        ),
+      );
+      _child = mapWidget();
+    });
+    print(position);
+  }
+
+  Widget mapWidget() {
+    return GoogleMap(
+      mapType: MapType.normal,
+      markers: Set.from(DestinationMarkers),
+      initialCameraPosition: CameraPosition(
+        target: LatLng(latitude, longitude),
+        zoom: 17,
       ),
-    )
+      onMapCreated: (GoogleMapController controller) {
+        _controller = controller;
+      },
+    );
+  }
+
+  List<Marker> DestinationMarkers = [
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getUserLocation();
+    super.initState();
+  }
+
+  @override
+  void deactivate() {
+    // TODO: implement deactivate
+    super.deactivate();
+    DestinationMarkers.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,17 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 margin: EdgeInsets.symmetric(
                   horizontal: 12,
                 ),
-                child: GoogleMap(
-                  mapType: MapType.normal,
-                  markers: Set.from(DestinationMarkers),
-                  initialCameraPosition: CameraPosition(
-                    target: LatLng(
-                      37.56321644,
-                      127.0359075,
-                    ),
-                    zoom: 17,
-                  ),
-                ),
+                child: _child,
               ),
             ),
             SizedBox(

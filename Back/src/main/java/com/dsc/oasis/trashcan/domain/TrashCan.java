@@ -31,17 +31,26 @@ public class TrashCan {
 
     private Double longitude;
 
+    private int distance;
+
     @Transient
+    @Column
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Point point;
 
     @Transient
+    @Column
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Point point_reverse;
 
-    private int distance;
-
     public TrashCanResponse toResponse(){
-        return TrashCanResponse.builder().id(id).point(point).build();
+        return TrashCanResponse.builder()
+                .id(id)
+                .address(address)
+                .location(location)
+                .trash_type(trash_type)
+                .latitude(latitude)
+                .longitude(longitude)
+                .distance(distance).build();
     }
 }

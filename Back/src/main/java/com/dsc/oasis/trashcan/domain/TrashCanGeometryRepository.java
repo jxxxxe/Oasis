@@ -36,8 +36,7 @@ public class TrashCanGeometryRepository {
         Query query=entityManager.createNativeQuery("SELECT t.id ,t.address, t.location,t.trash_type," +
                 "t.latitude, t.longitude, t.point,"+setlonlat
                 +"FROM tb1_tcan AS t \n"
-                + "WHERE MBRContains(ST_LINESTRINGFROMTEXT(" + pointFormat + ", t.point)" +
-                "ORDER BY t.distance", TrashCan.class)
+                + "WHERE MBRContains(ST_LINESTRINGFROMTEXT(" + pointFormat + ", t.point)", TrashCan.class)
                 .setMaxResults(10);
 
         List<TrashCan> trashCans= query.getResultList();

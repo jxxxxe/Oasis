@@ -14,5 +14,16 @@ public class TrashCanResponse {
 
     private Long id;
 
-    private Point point;
+    private String address;
+
+    private String location;
+
+    private String trash_type;
+
+    private Double latitude;
+
+    private Double longitude;
+
+    private Integer distance;
+
 }

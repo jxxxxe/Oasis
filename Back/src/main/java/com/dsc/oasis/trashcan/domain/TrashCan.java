@@ -1,12 +1,14 @@
 package com.dsc.oasis.trashcan.domain;
 
 import com.dsc.oasis.trashcan.dto.TrashCanResponse;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import net.minidev.json.annotate.JsonIgnore;
 import org.locationtech.jts.geom.Point;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 
 @Entity
 @Builder
@@ -31,16 +33,10 @@ public class TrashCan {
 
     private Double longitude;
 
-    private int distance;
+    private Integer distance;
 
-    @Transient
-    @Column
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Point point;
 
-    @Transient
-    @Column
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Point point_reverse;
 
     public TrashCanResponse toResponse(){

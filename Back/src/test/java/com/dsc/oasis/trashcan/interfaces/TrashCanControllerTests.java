@@ -46,9 +46,9 @@ public class TrashCanControllerTests {
 
     @Test
     public void detail() throws Exception {
-        TrashCan trashCan=TrashCan.builder().id(1L).build();
+        TrashCanResponse trashCanResponse=TrashCanResponse.builder().id(1L).build();
 
-        given(trashcanService.getTrashCanById(1L)).willReturn(trashCan);
+        given(trashcanService.getTrashCanById(1L)).willReturn(trashCanResponse);
 
         mvc.perform(get("/trashcans/1"))
                 .andExpect(status().isOk())

@@ -2,53 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oasis/services/location.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:oasis/services/networking.dart';
 import 'dart:async';
-
-Future<List<Post>> getData({double latitude, double longitude}) async {
-  final response =
-      await http.get("localhost:8080/api/oasis/trashcans?lon=$longitude&lat=$latitude");
-  if (response.statusCode == 200) {
-    List data = jsonDecode(response.body);
-    var postList = data.map((element) => Post.fromJson(element)).toList();
-    return postList;
-  } else {
-    print(response.statusCode);
-  }
-}
-
-class Post {
-  final String address;
-  final String location;
-  final String trashType;
-  final int distance;
-  final int id;
-  final double latitude;
-  final double longitude;
-
-  Post({
-    this.address,
-    this.location,
-    this.trashType,
-    this.distance,
-    this.id,
-    this.latitude,
-    this.longitude,
-  });
-
-  factory Post.fromJson(Map<String, dynamic> json) {
-    return Post(
-      address: json['address'],
-      location: json['location'],
-      trashType: json['trashType'],
-      distance: json['distance'],
-      id: json['id'],
-      latitude: json['latitude'],
-      longitude: json['longitude'],
-    );
-  }
-}
 
 class HomeScreen extends StatefulWidget {
   static String id = 'home_screen';
@@ -58,7 +13,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Future<List<Post>> postList;
+  Future<List> postList;
+  List list;
   double latitude;
   double longitude;
   GoogleMapController _controller;
@@ -67,32 +23,52 @@ class _HomeScreenState extends State<HomeScreen> {
   void getUserLocation() async {
     Location location = Location();
     var position = await location.getCurrentLocation();
-    setState(() {
-      latitude = position.latitude;
-      longitude = position.longitude;
-      postList = getData(latitude: latitude,longitude: longitude);
-      print(postList);
+    latitude =  position.latitude;
+    longitude = position.longitude;
+    NetworkHelper networkHelper = NetworkHelper("http://10.0.2.2:8080/api/oasis/trashcans?lon=127.06&lat=37.543");
+    postList = networkHelper.getData();
+    list = await postList;
+
+    DestinationMarkers.add(
+      Marker(
+        markerId: MarkerId('TrashCan1'),
+        draggable: false,
+        position: LatLng(
+          37.54,
+          127.06,
+        ),
+      ),
+    );
+
+    for(int i=0; i<list.length; i++){
       DestinationMarkers.add(
         Marker(
-          markerId: MarkerId('TrashCan1'),
+          infoWindow: InfoWindow(
+            title: '${list[i]['location']}',
+          ),
+          markerId: MarkerId('${list[i]['id']}'),
           draggable: false,
           position: LatLng(
-            latitude,
-            longitude,
+            list[i]['latitude'],
+            list[i]['longitude'],
           ),
         ),
       );
+    }
+
+    setState(() {
       _child = mapWidget();
     });
   }
 
   Widget mapWidget() {
     return GoogleMap(
+      myLocationEnabled: true,
       mapType: MapType.normal,
       markers: Set.from(DestinationMarkers),
       initialCameraPosition: CameraPosition(
-        target: LatLng(latitude, longitude),
-        zoom: 17,
+        target: LatLng(37.54, 127.06),
+        zoom: 16,
       ),
       onMapCreated: (GoogleMapController controller) {
         _controller = controller;
@@ -112,8 +88,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void deactivate() {
     // TODO: implement deactivate
-    super.deactivate();
     DestinationMarkers.clear();
+    _controller.dispose();
+    super.deactivate();
   }
 
   @override

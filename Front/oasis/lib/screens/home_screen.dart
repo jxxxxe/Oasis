@@ -89,7 +89,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void deactivate() {
     // TODO: implement deactivate
     DestinationMarkers.clear();
-    _controller.dispose();
     super.deactivate();
   }
 

@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -23,9 +24,10 @@ class _HomeScreenState extends State<HomeScreen> {
   void getUserLocation() async {
     Location location = Location();
     var position = await location.getCurrentLocation();
-    latitude =  position.latitude;
+    latitude = position.latitude;
     longitude = position.longitude;
-    NetworkHelper networkHelper = NetworkHelper("http://10.0.2.2:8080/api/oasis/trashcans?lon=127.06&lat=37.543");
+    NetworkHelper networkHelper = NetworkHelper(
+        "http://10.0.2.2:8080/api/oasis/trashcans?lon=127.06&lat=37.543");
     postList = networkHelper.getData();
     list = await postList;
 
@@ -40,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
 
-    for(int i=0; i<list.length; i++){
+    for (int i = 0; i < list.length; i++) {
       DestinationMarkers.add(
         Marker(
           infoWindow: InfoWindow(
@@ -95,6 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Firebase.initializeApp();
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -142,13 +145,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       fontSize: 24,
                     ),
                   ),
-                  Text(
-                    'Luke',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                    ),
-                  ),
+                  // Text(
+                  //   'Luke',
+                  //   style: TextStyle(
+                  //     fontWeight: FontWeight.bold,
+                  //     fontSize: 24,
+                  //   ),
+                  // ),
                 ],
               ),
             ),

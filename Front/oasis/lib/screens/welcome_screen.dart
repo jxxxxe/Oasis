@@ -1,13 +1,37 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:oasis/screens/home_screen.dart';
-import 'package:oasis/screens/login_screen.dart';
-import 'package:oasis/screens/registration_email.dart';
+import 'package:oasis/screens/registration_screen.dart';
 
-class Welcomescreen extends StatelessWidget {
-  static String id = 'welcome_screen';
+class WelcomeScreen extends StatefulWidget {
+  static const String id = 'welcome_screen';
+  @override
+  _WelcomeScreenState createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  bool showSpinner = false;
+  final _auth = FirebaseAuth.instance;
+  TextEditingController _mailCon = TextEditingController();
+  TextEditingController _pwCon = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _mailCon.dispose();
+    _pwCon.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    Firebase.initializeApp();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
@@ -30,9 +54,8 @@ class Welcomescreen extends StatelessWidget {
                 height: 100.0,
               ),
               TextField(
-                onChanged: (value) {
-                  //Do something with the user input.
-                },
+                controller: _mailCon,
+                keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   hintText: 'Enter your Email',
                   contentPadding:
@@ -41,13 +64,11 @@ class Welcomescreen extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.white70, width: 1.0),
+                    borderSide: BorderSide(color: Colors.white70, width: 1.0),
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.lightBlue, width: 2.0),
+                    borderSide: BorderSide(color: Colors.lightBlue, width: 2.0),
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   ),
                 ),
@@ -56,9 +77,8 @@ class Welcomescreen extends StatelessWidget {
                 height: 10,
               ),
               TextField(
-                onChanged: (value) {
-                  //Do something with the user input.
-                },
+                controller: _pwCon,
+                obscureText: true,
                 decoration: InputDecoration(
                   hintText: 'Enter your Password',
                   contentPadding:
@@ -67,36 +87,14 @@ class Welcomescreen extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.white70, width: 1.0),
+                    borderSide: BorderSide(color: Colors.white70, width: 1.0),
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.lightBlue, width: 2.0),
+                    borderSide: BorderSide(color: Colors.lightBlue, width: 2.0),
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   ),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Checkbox(value: true, onChanged: null),
-                      Text(
-                        'Remember me',
-                      ),
-                    ],
-                  ),
-                  FlatButton(
-                    onPressed: null,
-                    child: Text('Forgot Password',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),),
-                  ),
-                ],
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
@@ -105,8 +103,27 @@ class Welcomescreen extends StatelessWidget {
                   color: Colors.lightBlue,
                   borderRadius: BorderRadius.circular(10.0),
                   child: MaterialButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, HomeScreen.id);
+                    onPressed: () async {
+                      setState(() {
+                        showSpinner = true;
+                      });
+                      try {
+                        final user = await _auth.signInWithEmailAndPassword(
+                            email: _mailCon.text, password: _pwCon.text);
+                        if (user != null) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => HomeScreen(),
+                            ),
+                          );
+                        }
+
+                        setState(() {
+                          showSpinner = false;
+                        });
+                      } catch (e) {
+                        print(e);
+                      }
                     },
                     minWidth: 200.0,
                     height: 42.0,
@@ -147,14 +164,13 @@ class Welcomescreen extends StatelessWidget {
                 ],
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(0,0,0,16),
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 16),
                 child: Material(
                   elevation: 5.0,
                   color: Colors.deepOrange,
                   borderRadius: BorderRadius.circular(10.0),
                   child: MaterialButton(
-                    onPressed: () {
-                    },
+                    onPressed: signInWithGoogle,
                     minWidth: 200.0,
                     height: 42.0,
                     child: Text(
@@ -165,10 +181,16 @@ class Welcomescreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               FlatButton(
-                onPressed: (){
-                  Navigator.pushNamed(context, RegistrationEmail.id);
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => Registration(),
+                    ),
+                  );
                 },
                 child: Text(
                   'Sign Up',
@@ -184,5 +206,23 @@ class Welcomescreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<UserCredential> signInWithGoogle() async {
+    final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
+    final GoogleAuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+    if (googleUser != null) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (BuildContext context) => HomeScreen(),
+        ),
+      );
+    }
+    return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }

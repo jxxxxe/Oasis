@@ -7,8 +7,7 @@ import 'package:oasis/services/networking.dart';
 import 'dart:async';
 
 class HomeScreen extends StatefulWidget {
-  static String id = 'home_screen';
-
+  static const String id = 'homescreen';
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }

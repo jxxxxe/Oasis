@@ -7,7 +7,6 @@ import 'package:oasis/screens/registration_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static const String id = 'welcome_screen';
-
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
@@ -112,7 +111,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         final user = await _auth.signInWithEmailAndPassword(
                             email: _mailCon.text, password: _pwCon.text);
                         if (user != null) {
-                          Navigator.pushNamed(context, HomeScreen.id);
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => HomeScreen(),
+                            ),
+                          );
                         }
 
                         setState(() {
@@ -183,7 +186,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               ),
               FlatButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, RegistrationEmail.id);
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => Registration(),
+                    ),
+                  );
                 },
                 child: Text(
                   'Sign Up',
@@ -210,7 +217,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       idToken: googleAuth.idToken,
     );
     if (googleUser != null) {
-      Navigator.pushNamed(context, HomeScreen.id);
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (BuildContext context) => HomeScreen(),
+        ),
+      );
     }
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }

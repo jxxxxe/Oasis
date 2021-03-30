@@ -31,20 +31,10 @@ class _HomeScreenState extends State<HomeScreen> {
     latitude = position.latitude;
     longitude = position.longitude;
     NetworkHelper networkHelper = NetworkHelper(
-        "http://10.0.2.2:8080/api/oasis/trashcans?lon=127.06&lat=37.543");
+        "http://10.0.2.2:8080/api/oasis/trashcans?lon=$longitude&lat=$latitude");
     postList = networkHelper.getData();
     list = await postList;
-
-    DestinationMarkers.add(
-      Marker(
-        markerId: MarkerId('TrashCan1'),
-        draggable: false,
-        position: LatLng(
-          37.54,
-          127.06,
-        ),
-      ),
-    );
+    
 
     for (int i = 0; i < list.length; i++) {
       DestinationMarkers.add(
@@ -73,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
       mapType: MapType.normal,
       markers: Set.from(DestinationMarkers),
       initialCameraPosition: CameraPosition(
-        target: LatLng(37.54, 127.06),
+        target: LatLng(latitude, longitude),
         zoom: 16,
       ),
       onMapCreated: (GoogleMapController controller) {

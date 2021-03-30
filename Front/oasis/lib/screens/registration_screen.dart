@@ -3,13 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oasis/screens/welcome_screen.dart';
 
-class RegistrationEmail extends StatefulWidget {
-  static const String id = 'registration_email';
+class Registration extends StatefulWidget {
+  static const String id = 'registration';
   @override
-  _RegistrationEmailState createState() => _RegistrationEmailState();
+  _RegistrationState createState() => _RegistrationState();
 }
 
-class _RegistrationEmailState extends State<RegistrationEmail> {
+class _RegistrationState extends State<Registration> {
   final _auth = FirebaseAuth.instance;
   bool showSpinner = false;
   TextEditingController _mailCon = TextEditingController();
@@ -139,7 +139,12 @@ class _RegistrationEmailState extends State<RegistrationEmail> {
                               await _auth.createUserWithEmailAndPassword(
                                   email: _mailCon.text, password: _pwCon.text);
                           if (newUser != null) {
-                            Navigator.pushNamed(context, WelcomeScreen.id);
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    WelcomeScreen(),
+                              ),
+                            );
                           }
 
                           setState(() {

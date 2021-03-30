@@ -1,19 +1,21 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:oasis/services/location.dart';
 import 'package:oasis/services/networking.dart';
 import 'dart:async';
 
 class HomeScreen extends StatefulWidget {
-  static String id = 'home_screen';
-
+  static const String id = 'homescreen';
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
   Future<List> postList;
   List list;
   double latitude;
@@ -91,7 +93,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void deactivate() {
     // TODO: implement deactivate
     DestinationMarkers.clear();
-    _controller.dispose();
     super.deactivate();
   }
 
@@ -124,6 +125,22 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontSize: 40,
                       ),
                     ),
+                  ),
+                  Positioned(
+                    right: 10,
+                    child: TextButton(
+                      child: Text(
+                        'Sign out',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                        ),
+                      ),
+                      onPressed: () {
+                        FirebaseAuth.instance.signOut();
+                        _googleSignIn.signOut();
+                      },
+                    ),
                   )
                 ],
               ),
@@ -139,7 +156,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Hello Eco-Friend!',
+                    'Hello Eco-Friend!'
+                    // + FirebaseAuth.instance.currentUser.displayName
+                    ,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 24,

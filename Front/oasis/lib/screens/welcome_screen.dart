@@ -3,11 +3,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:oasis/screens/home_screen.dart';
-import 'package:oasis/screens/registration.dart';
+import 'package:oasis/screens/registration_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static const String id = 'welcome_screen';
-
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
@@ -17,6 +16,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   final _auth = FirebaseAuth.instance;
   TextEditingController _mailCon = TextEditingController();
   TextEditingController _pwCon = TextEditingController();
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   @override
   void initState() {
@@ -112,9 +112,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         final user = await _auth.signInWithEmailAndPassword(
                             email: _mailCon.text, password: _pwCon.text);
                         if (user != null) {
-                          Navigator.pushNamed(context, HomeScreen.id);
+                          StreamBuilder<User>(
+                              stream: FirebaseAuth.instance.onAuthStateChanged,
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return HomeScreen();
+                                }
+                                return WelcomeScreen();
+                              });
                         }
-
                         setState(() {
                           showSpinner = false;
                         });
@@ -183,7 +189,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               ),
               FlatButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, RegistrationEmail.id);
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => Registration(),
+                    ),
+                  );
                 },
                 child: Text(
                   'Sign Up',
@@ -209,9 +219,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
-    if (googleUser != null) {
-      Navigator.pushNamed(context, HomeScreen.id);
-    }
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    final User user = (await _auth.signInWithCredential(credential)).user;
+
+    StreamBuilder<User>(
+        stream: FirebaseAuth.instance.onAuthStateChanged,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return HomeScreen();
+          }
+          return WelcomeScreen();
+        });
   }
 }

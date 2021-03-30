@@ -204,18 +204,34 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderRadius: BorderRadius.circular(10.0),
                   child: MaterialButton(
                     onPressed: () async {
-                      final response = await http.post(
-                        "http://10.0.2.2:8080/api/oasis/insert-trashcan",
-                        body: jsonEncode({
-                          "email": "email@email.com",
-                          "password": "1234",
-                          "lat": 37.3245,
-                          "lon": 123.324
-                        }),
-                        headers: {'Content-Type': "application/json"},
+                      DestinationMarkers.add(
+                        Marker(
+                          infoWindow: InfoWindow(
+                            title: '추가한 쓰레기',
+                          ),
+                          markerId: MarkerId('추가한 예시'),
+                          draggable: false,
+                          position: LatLng(
+                            37.538228,
+                            127.061240,
+                          ),
+                        ),
                       );
-
-                      print(response.body);
+                      setState(() {
+                        _child = mapWidget();
+                      });
+                      // final response = await http.post(
+                      //   "http://10.0.2.2:8080/api/oasis/insert-trashcan",
+                      //   body: jsonEncode({
+                      //     "email": "email@email.com",
+                      //     "password": "1234",
+                      //     "lat": 37.3245,
+                      //     "lon": 123.324,
+                      //   }),
+                      //   headers: {'Content-Type': "application/json"},
+                      // );
+                      //
+                      // print(response.body);
                     },
                     minWidth: 200.0,
                     height: 42.0,

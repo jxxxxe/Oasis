@@ -1,15 +1,13 @@
 # Oasis
 
-솔루션 챌린지
+2021 Solution Challenge
 
-## 사용 기술
+## Tech Stack
 
-FE => Flutter
-
-BE => Spring (boot)
+- `Frontend: Flutter`
+- `Backend: Firebase, Spring Boot`
 
 ### How to use?
 
-FE =>
-
-BE => `src/main` 에다가 `resources` 폴더 만들고 거기에 `application.yml` 만들기
+- Frontend: `flutter run`
+- Backend: `Run OasisApplication`

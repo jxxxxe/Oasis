@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oasis/services/location.dart';
 import 'package:oasis/services/networking.dart';
+import 'package:http/http.dart' as http;
 import 'dart:async';
 
 class HomeScreen extends StatefulWidget {
@@ -180,7 +183,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.blueGrey,
                   borderRadius: BorderRadius.circular(10.0),
                   child: MaterialButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      final response = await http.post(
+                        "http://10.0.2.2:8080/api/oasis/insert-trashcan",
+                        body: jsonEncode({
+                          "email": "email@email.com",
+                          "password": "1234",
+                          "lat": 37.3245,
+                          "lon": 123.324
+                        }),
+                        headers: {'Content-Type': "application/json"},
+                      );
+
+                      print(response.body);
+                    },
                     minWidth: 200.0,
                     height: 42.0,
                     child: Text(

@@ -18,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  Location location = Location();
   Future<List> postList;
   List list;
   double latitude;
@@ -26,7 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _child;
 
   void getUserLocation() async {
-    Location location = Location();
     var position = await location.getCurrentLocation();
     latitude = position.latitude;
     longitude = position.longitude;
@@ -204,6 +204,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderRadius: BorderRadius.circular(10.0),
                   child: MaterialButton(
                     onPressed: () async {
+                      var position = await location.getCurrentLocation();
+                      double lat = position.latitude;
+                      double lon = position.longitude;
+
                       DestinationMarkers.add(
                         Marker(
                           infoWindow: InfoWindow(
@@ -212,26 +216,28 @@ class _HomeScreenState extends State<HomeScreen> {
                           markerId: MarkerId('추가한 예시'),
                           draggable: false,
                           position: LatLng(
-                            37.538228,
-                            127.061240,
+                            lat,
+                            lon,
                           ),
                         ),
                       );
+
+
                       setState(() {
                         _child = mapWidget();
                       });
-                      // final response = await http.post(
-                      //   "http://10.0.2.2:8080/api/oasis/insert-trashcan",
-                      //   body: jsonEncode({
-                      //     "email": "email@email.com",
-                      //     "password": "1234",
-                      //     "lat": 37.3245,
-                      //     "lon": 123.324,
-                      //   }),
-                      //   headers: {'Content-Type': "application/json"},
-                      // );
-                      //
-                      // print(response.body);
+                      final response = await http.post(
+                        "http://10.0.2.2:8080/api/oasis/insert-trashcan",
+                        body: jsonEncode({
+                          "email": "email@email.com",
+                          "password": "1234",
+                          "lat": lat,
+                          "lon": lon,
+                        }),
+                        headers: {'Content-Type': "application/json"},
+                      );
+
+                      print(response.body);
                     },
                     minWidth: 200.0,
                     height: 42.0,

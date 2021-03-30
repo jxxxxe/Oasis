@@ -5,7 +5,7 @@ import 'package:oasis/screens/home_screen.dart';
 import 'package:oasis/screens/registration_screen.dart';
 import 'package:oasis/screens/welcome_screen.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
@@ -15,12 +15,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: WelcomeScreen.id,
-      routes: {
-        WelcomeScreen.id: (context) => WelcomeScreen(),
-        Registration.id: (context) => Registration(),
-        HomeScreen.id: (context) => HomeScreen(),
-      },
-    );
+        home: StreamBuilder<User>(
+            stream: FirebaseAuth.instance.onAuthStateChanged,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return HomeScreen();
+              } else
+                return WelcomeScreen();
+            }));
   }
 }

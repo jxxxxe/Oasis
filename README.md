@@ -25,7 +25,7 @@
 * DB: MySQL
 </br>
 
-## How to use?
+## ❔ How to use
 
 - Frontend: `flutter run`
 - Backend: `Run OasisApplication`

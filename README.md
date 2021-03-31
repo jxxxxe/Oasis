@@ -14,9 +14,9 @@
 </br>
 
 ## 👪 Team
-* Front: [Hyungwook Lee](https://github.com/luke0421)
+* Front: [Hyeonguk Lee](https://github.com/luke0421)
 * Back: [Minsu Kim](https://github.com/Soo-ss), [Jeongeun An](https://github.com/jxxxxe)
-* Management : [Byungjun Kim](https://github.com/BangDoon)
+* Management : [BangDoon](https://github.com/BangDoon)
 </br>
 
 ## 🔧 Stack

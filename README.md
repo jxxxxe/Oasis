@@ -56,14 +56,14 @@
 
 <img src="https://firebasestorage.googleapis.com/v0/b/oasis-e2420.appspot.com/o/20210331_194315.png?alt=media&token=d2c5c796-d210-4dbd-8c6e-04a67cf6a07a" width="208" height="355">
 
-*A trash can map*
+*The trash can map*
 
 </br>
 
 
 <img src="https://firebasestorage.googleapis.com/v0/b/oasis-e2420.appspot.com/o/20210331_194410.png?alt=media&token=cd9c544f-0e72-47d8-82c1-839d29431edb" width="208" height="355"> <img src="https://firebasestorage.googleapis.com/v0/b/oasis-e2420.appspot.com/o/20210331_194418.png?alt=media&token=cc7b5d80-c9f7-49b8-b52e-a6dda840c8de" width="208" height="355">
 
-*Adding trash cans directly*
+*Adding the trash cans directly*
 
 </br>
 
